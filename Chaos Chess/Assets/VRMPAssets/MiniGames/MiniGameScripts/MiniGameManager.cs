@@ -296,6 +296,7 @@ namespace XRMultiplayer.MiniGames
 
         void SetInGameState()
         {
+            currentMiniGame.SetupGame();
             m_CurrentTimer = 0.0f;
             ResetContestants(true);
 

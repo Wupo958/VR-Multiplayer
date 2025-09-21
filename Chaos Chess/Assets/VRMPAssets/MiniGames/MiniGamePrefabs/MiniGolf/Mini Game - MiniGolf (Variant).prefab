@@ -1,0 +1,229 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4373884396788784031
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 822563501588947606, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -25.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 822563501588947606, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -17.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1879769529974787615, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 13.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2633194378305418621, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_ActiveFontFeatures.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100963020756829195, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_Name
+      value: Mini Game - MiniGolf (Variant)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3327419401358733279, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2707328881
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463703598496649971, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463703598496649971, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463703598496649971, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463703598496649971, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.70710576
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463703598496649971, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463703598496649971, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70710784
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463703598496649971, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463703598496649971, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463703598496649971, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463703598496649971, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625932777759366837, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: currentMiniGame
+      value: 
+      objectReference: {fileID: -1145262328529408282}
+    - target: {fileID: 4071179772762362241, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4071179772762362241, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 4412219803463279465, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -92.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4412219803463279465, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 90.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4478336883216368344, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 3.8846579
+      objectReference: {fileID: 0}
+    - target: {fileID: 4478336883216368344, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 3.1357543
+      objectReference: {fileID: 0}
+    - target: {fileID: 4478336883216368344, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.00000036834348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4478336883216368344, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1.4423292
+      objectReference: {fileID: 0}
+    - target: {fileID: 4478336883216368344, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -1.0678784
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570433784954389499, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570433784954389499, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462700311066693808, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462700311066693808, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462700311066693808, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9013392365747826283, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3100963020756829195, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      insertIndex: 3
+      addedObject: {fileID: -2972423685062919322}
+    - targetCorrespondingSourceObject: {fileID: 3100963020756829195, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      insertIndex: 4
+      addedObject: {fileID: -1145262328529408282}
+  m_SourcePrefab: {fileID: 100100000, guid: e7a58ef30a96fb845b50778e16448078, type: 3}
+--- !u!1 &1710239619060948884 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3100963020756829195, guid: e7a58ef30a96fb845b50778e16448078,
+    type: 3}
+  m_PrefabInstance: {fileID: 4373884396788784031}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-2972423685062919322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710239619060948884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffea9f002a174f64aa028c05822f6da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VRMP::XRMultiplayer.MiniGames.NetworkedGolf
+  ShowTopMostFoldoutHeaderGroup: 1
+  m_CoursePiecePrefabs:
+  - {fileID: 5912147868524705344, guid: 5e24b527c0d94354d85763a1dd633f61, type: 3}
+  m_StartPiecePrefab: {fileID: 3906704472161399547, guid: 1ec77fea198de8b4cb0072ba0b19a708,
+    type: 3}
+  m_EndPiecePrefab: {fileID: 3463479578329607617, guid: 382ed9c771a5a6a4f9a30b4f5dd3c977,
+    type: 3}
+  m_NumberOfMiddlePieces: 5
+  m_CourseParent: {fileID: 0}
+  m_GolfBallPrefab: {fileID: 2838131064367532738, guid: 1aa475542a6630d41a9ae1ca8769aad1,
+    type: 3}
+--- !u!114 &-1145262328529408282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710239619060948884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4ab044433f69148a440fa626130cd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VRMP::XRMultiplayer.MiniGames.MiniGame_Golf
+  gameName: Mini Golf
+  m_GameType: 0
+  m_GameLength: 90
+  m_GameInteractables: []
+  m_NetworkedGameplay: {fileID: -2972423685062919322}
