@@ -112,6 +112,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3493595459459767661}
+    - targetCorrespondingSourceObject: {fileID: 2838131064367532738, guid: 1aa475542a6630d41a9ae1ca8769aad1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1746835135139711556}
   m_SourcePrefab: {fileID: 100100000, guid: 1aa475542a6630d41a9ae1ca8769aad1, type: 3}
 --- !u!1 &1310918183164561367 stripped
 GameObject:
@@ -132,3 +136,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkProjectile
   ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &1746835135139711556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310918183164561367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac5247541e5a0aa49a23999d57b752b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallTrackDistance

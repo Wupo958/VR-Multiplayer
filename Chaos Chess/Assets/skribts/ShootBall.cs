@@ -67,7 +67,7 @@ public class ShootBall : MonoBehaviour
         rb.linearVelocity = v;
 
         // kleiner Up-Impuls (optional)
-        rb.AddForce(Vector3.up * 2f, ForceMode.Impulse);
+        rb.AddForce(Vector3.up * 3f, ForceMode.Impulse);
 
         // Sicherheit: nach X Sekunden zerstören
         if (lifeTime > 0f) Destroy(ball, lifeTime);
