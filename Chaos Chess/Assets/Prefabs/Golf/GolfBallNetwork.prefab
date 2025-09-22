@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 4551218090055059719}
   - component: {fileID: 2108600300090279767}
   - component: {fileID: 7067077640088742047}
+  - component: {fileID: 4826859921780679851}
   - component: {fileID: 3916464032018823594}
   m_Layer: 0
   m_Name: GolfBallNetwork
@@ -80,8 +81,8 @@ Rigidbody:
   m_GameObject: {fileID: 2838131064367532738}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0.5
-  m_AngularDamping: 0.5
+  m_LinearDamping: 0.25
+  m_AngularDamping: 0.25
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -349,6 +350,19 @@ MonoBehaviour:
   m_AllowCollisionOwnershipExchange: 1
   m_MinExchangeVelocityMagitude: 0.025
   spawnLocked: 1
+--- !u!114 &4826859921780679851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2838131064367532738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae984c7608b477347b4b4ac0dd456496, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VRMP::GolfBall
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!205 &3916464032018823594
 LODGroup:
   m_ObjectHideFlags: 0
@@ -384,7 +398,7 @@ GameObject:
   - component: {fileID: 840590761464621680}
   m_Layer: 0
   m_Name: Collision
-  m_TagString: Untagged
+  m_TagString: GolfBall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

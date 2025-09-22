@@ -100,6 +100,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -121,6 +123,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -991,7 +994,7 @@ PrefabInstance:
     - target: {fileID: 5735283280202256374, guid: 332ca3bf2d427ec42911879792acab6c,
         type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 2388527196
+      value: 1229736210
       objectReference: {fileID: 0}
     - target: {fileID: 7444699724807127596, guid: 332ca3bf2d427ec42911879792acab6c,
         type: 3}
@@ -1399,7 +1402,7 @@ PrefabInstance:
     - target: {fileID: 5735283280202256374, guid: 332ca3bf2d427ec42911879792acab6c,
         type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 1366885870
+      value: 3643377071
       objectReference: {fileID: 0}
     - target: {fileID: 7444699724807127596, guid: 332ca3bf2d427ec42911879792acab6c,
         type: 3}
@@ -1822,7 +1825,7 @@ PrefabInstance:
     - target: {fileID: 5735283280202256374, guid: 332ca3bf2d427ec42911879792acab6c,
         type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 2510574681
+      value: 1445729901
       objectReference: {fileID: 0}
     - target: {fileID: 7444699724807127596, guid: 332ca3bf2d427ec42911879792acab6c,
         type: 3}
@@ -2308,6 +2311,11 @@ PrefabInstance:
       propertyPath: m_VerticalAlignment
       value: 512
       objectReference: {fileID: 0}
+    - target: {fileID: 2633194378305418621, guid: e7a58ef30a96fb845b50778e16448078,
+        type: 3}
+      propertyPath: m_ActiveFontFeatures.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2820545445985926731, guid: e7a58ef30a96fb845b50778e16448078,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2371,7 +2379,7 @@ PrefabInstance:
     - target: {fileID: 3327419401358733279, guid: e7a58ef30a96fb845b50778e16448078,
         type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 3807345118
+      value: 3864215105
       objectReference: {fileID: 0}
     - target: {fileID: 3327419401358733279, guid: e7a58ef30a96fb845b50778e16448078,
         type: 3}
@@ -2846,7 +2854,7 @@ PrefabInstance:
     - target: {fileID: 9013392365747826283, guid: e7a58ef30a96fb845b50778e16448078,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3063,7 +3071,7 @@ PrefabInstance:
     - target: {fileID: 5735283280202256374, guid: 332ca3bf2d427ec42911879792acab6c,
         type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 195362932
+      value: 2857520125
       objectReference: {fileID: 0}
     - target: {fileID: 7444699724807127596, guid: 332ca3bf2d427ec42911879792acab6c,
         type: 3}

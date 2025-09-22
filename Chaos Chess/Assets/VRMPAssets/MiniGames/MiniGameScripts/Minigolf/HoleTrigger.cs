@@ -1,31 +1,34 @@
 using UnityEngine;
-using UnityEngine.Events;
+using XRMultiplayer.MiniGames;
 
-/// <summary>
-/// Detects when a specific object enters its trigger and invokes a UnityEvent.
-/// </summary>
 public class HoleTrigger : MonoBehaviour
 {
-    /// <summary>
-    /// The tag of the object we are looking for (e.g., the golf ball).
-    /// </summary>
-    [SerializeField]
-    private string m_TargetTag = "GolfBall";
+    private MiniGame_Golf m_MiniGameGolf;
 
-    /// <summary>
-    /// This event is invoked when the target object enters the trigger.
-    /// </summary>
-    public UnityEvent OnBallEntered;
+    void Start()
+    {
+        m_MiniGameGolf = FindFirstObjectByType<MiniGame_Golf>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Check if the object that entered has the correct tag.
-        if (other.CompareTag(m_TargetTag))
+        // Make sure the object that entered is a golf ball
+        if (other.CompareTag("GolfBall"))
         {
-            Debug.Log("Ball entered the hole!");
+            GolfBall ball = other.GetComponentInParent<GolfBall>();
 
-            // Invoke the event so that any listening scripts are notified.
-            OnBallEntered.Invoke();
+            // IMPORTANT: Check if it's the LOCAL player's ball before submitting.
+            // Every player's game will detect the ball entering the trigger,
+            // but only the ball's owner should report it.
+            if (ball.IsOwner)
+            {
+                m_MiniGameGolf.PlayerHoledOut();
+
+                // Optional: Disable the ball's physics so it can't be knocked out.
+                // We'll also disable the trigger to prevent it from being called multiple times.
+                ball.GetComponent<Rigidbody>().isKinematic = true;
+                GetComponent<Collider>().enabled = false;
+            }
         }
     }
 }
