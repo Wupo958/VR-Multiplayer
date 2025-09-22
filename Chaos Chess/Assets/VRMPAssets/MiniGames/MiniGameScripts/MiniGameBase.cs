@@ -134,6 +134,7 @@ namespace XRMultiplayer.MiniGames
         /// <param name="submitScore">Flag indicating whether to submit the score.</param>
         public virtual void FinishGame(bool submitScore = true)
         {
+            Debug.Log("---!!! FINISHED THE GAME !!!---");
             RemoveInteractables();
             m_Finished = true;
             m_CurrentTimer = m_GameLength;

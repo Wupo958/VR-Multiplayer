@@ -233,7 +233,7 @@ PrefabInstance:
     - target: {fileID: 3327419401358733279, guid: e7a58ef30a96fb845b50778e16448078,
         type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 2044014510
+      value: 2707328881
       objectReference: {fileID: 0}
     - target: {fileID: 3463703598496649971, guid: e7a58ef30a96fb845b50778e16448078,
         type: 3}
@@ -388,7 +388,7 @@ PrefabInstance:
     - target: {fileID: 9013392365747826283, guid: e7a58ef30a96fb845b50778e16448078,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -513,6 +513,7 @@ MonoBehaviour:
   - {fileID: 2060366257267657467}
   - {fileID: 3845106703413163831}
   m_NetworkedGameplay: {fileID: -2972423685062919322}
+  m_ClubResetTime: 0.25
 --- !u!1001 &6752975559844993623
 PrefabInstance:
   m_ObjectHideFlags: 0
