@@ -7,7 +7,7 @@ public class ShootBall : MonoBehaviour
     [Header("Refs")]
     [SerializeField] private GameObject ballPrefab; // Muss einen Rigidbody + Collider haben
     [SerializeField] private Transform firePoint;   // Da spawnt der Ball (Position + Richtung)
-    [SerializeField] private GameObject bat;   // Da spawnt der Ball (Position + Richtung)
+    
 
     [Header("Schuss-Settings")]
     [SerializeField] private float muzzleSpeed = 45f; // m/s entlang firePoint.forward
@@ -16,8 +16,8 @@ public class ShootBall : MonoBehaviour
     [SerializeField] private float lifeTime = 8f;    // Auto-Despawn
 
     [Header("Optional: misc")]
-    [SerializeField] private bool shooting = false;
-    private float nextShootTime;
+    [SerializeField] public bool shooting = false;
+    private float nextShootTime = 2.5f;
 
     private void Start()
     {
@@ -26,10 +26,11 @@ public class ShootBall : MonoBehaviour
 
     private void Update()
     {
-        if (bat.GetComponent<XRGrabInteractable>().isSelected && !shooting)
+        nextShootTime -= Time.deltaTime;
+        if (shooting && nextShootTime < 0)
         {
-            InvokeRepeating(nameof(Fire), 2.5f, 2.5f);
-            shooting = true;
+            Fire();
+            nextShootTime = 2.5f;
         }
     }
 

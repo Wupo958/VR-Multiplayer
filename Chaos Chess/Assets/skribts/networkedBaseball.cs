@@ -12,7 +12,6 @@ namespace XRMultiplayer.MiniGames
     {
         [Header("Ballmaschinen")]
         [SerializeField] private GameObject[] ballMachines;
-        [SerializeField] private GameObject[] bats;
 
         private MiniGame_Baseball m_MiniGame;
 
@@ -26,11 +25,20 @@ namespace XRMultiplayer.MiniGames
         {
             //m_RandomSeed.OnValueChanged -= OnSeedChanged;
         }
-        
-        public void spawnBats()
+
+        public void startShooting()
         {
-            foreach (var bat in bats) { 
-                bat.SetActive(true);
+            foreach (var machine in ballMachines)
+            {
+                machine.GetComponent<ShootBall>().shooting = true;
+            }
+        }
+
+        public void stopShooting()
+        {
+            foreach (var machine in ballMachines)
+            {
+                machine.GetComponent<ShootBall>().shooting = false;
             }
         }
     }

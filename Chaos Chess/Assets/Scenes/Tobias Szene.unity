@@ -5095,20 +5095,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 1471003240
       objectReference: {fileID: 0}
-    - target: {fileID: 1484610856443680255, guid: 3c6972973d6acb04f8cad536e94b7c82,
-        type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 2982201903
-      objectReference: {fileID: 0}
     - target: {fileID: 1729145196565797897, guid: 3c6972973d6acb04f8cad536e94b7c82,
         type: 3}
       propertyPath: GlobalObjectIdHash
       value: 1489221469
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729145196565797897, guid: 3c6972973d6acb04f8cad536e94b7c82,
-        type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 2982201903
       objectReference: {fileID: 0}
     - target: {fileID: 1844650794812633460, guid: 3c6972973d6acb04f8cad536e94b7c82,
         type: 3}
@@ -5125,11 +5115,6 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 1969750955
       objectReference: {fileID: 0}
-    - target: {fileID: 2754073484019839777, guid: 3c6972973d6acb04f8cad536e94b7c82,
-        type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 2982201903
-      objectReference: {fileID: 0}
     - target: {fileID: 2863948523346244450, guid: 3c6972973d6acb04f8cad536e94b7c82,
         type: 3}
       propertyPath: GlobalObjectIdHash
@@ -5144,11 +5129,6 @@ PrefabInstance:
         type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3283195536
-      objectReference: {fileID: 0}
-    - target: {fileID: 4080837240684299502, guid: 3c6972973d6acb04f8cad536e94b7c82,
-        type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 2982201903
       objectReference: {fileID: 0}
     - target: {fileID: 4604190893730604893, guid: 3c6972973d6acb04f8cad536e94b7c82,
         type: 3}
