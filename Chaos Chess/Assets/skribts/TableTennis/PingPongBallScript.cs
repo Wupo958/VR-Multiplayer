@@ -29,7 +29,7 @@ public class PingPongBallScript : NetworkBehaviour
     private void FixedUpdate()
     {
         // Nur der Server sollte die Physik (inkl. Capping) machen
-        if (!IsServer || rb == null) return;
+        
 
         Vector3 v = rb.linearVelocity;
         if (v.sqrMagnitude > maxSpeedSqr)
