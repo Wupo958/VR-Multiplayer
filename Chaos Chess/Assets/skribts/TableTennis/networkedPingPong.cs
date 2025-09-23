@@ -15,21 +15,16 @@ public class networkedPingPong : NetworkBehaviour
         TryGetComponent(out m_MiniGame);
     }
 
-    // Client ruft das hier, Server spawnt wirklich
+    // in networkedPingPong
     [ServerRpc(RequireOwnership = false)]
-    public void RequestSpawnBallServerRpc(ulong requesterClientId)
+    public void RequestSpawnBallServerRpc()
     {
-        Transform spawn = m_MiniGame.player1Turn ? ballSpawnPlayer1 : ballSpawnPlayer2;
+        Transform spawn = m_MiniGame.player1Turn ? ballSpawnPlayer1.transform : ballSpawnPlayer2.transform;
 
         GameObject go = Instantiate(ball, spawn.position, spawn.rotation);
         var no = go.GetComponent<NetworkObject>();
-        // Optional Ownership: dem anfragenden Spieler geben
-        //no.SpawnWithOwnership(requesterClientId);
+        no.Spawn(); // Ownership optional vergeben, falls nötig
 
-        // Falls du keine Ownership brauchst:
-        no.Spawn();
-
-        // Toggle Zug
         m_MiniGame.player1Turn = !m_MiniGame.player1Turn;
     }
 }

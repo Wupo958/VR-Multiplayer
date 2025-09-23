@@ -1,16 +1,18 @@
 using UnityEngine;
-using XRMultiplayer;
-using XRMultiplayer.MiniGames;
+using Unity.Netcode;
 
-public class PingPongBallScript : MonoBehaviour
+public class PingPongBallScript : NetworkBehaviour
 {
     public networkedPingPong networkedPingPong;
+
     private void OnCollisionEnter(Collision collision)
     {
+        if (!IsServer) return; // nur der Server triggert den nächsten Ball
+
         if (collision.gameObject.CompareTag("Ground"))
         {
-            networkedPingPong.SpawnBall(networkedPingPong.IsOwner);
-            Destroy(gameObject);
+            networkedPingPong.RequestSpawnBallServerRpc();
+            GetComponent<NetworkObject>().Despawn(true); // statt Destroy()
         }
     }
 }
