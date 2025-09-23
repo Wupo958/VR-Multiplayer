@@ -12,8 +12,10 @@ namespace XRMultiplayer.MiniGames
         [SerializeField] private networkedBaseball m_NetworkedGameplay;
         [SerializeField] float m_BatResetTime = .25f;
         readonly Dictionary<XRBaseInteractable, Pose> m_InteractablePoses = new();
+        private int currentMaxDistance;
 
-   
+
+
         private int m_CurrentHits = 0;
 
         /// <inheritdoc/>
@@ -42,6 +44,11 @@ namespace XRMultiplayer.MiniGames
 
         public void SetDistance(int distance)
         {
+            if(currentMaxDistance > distance)
+            {
+                return;
+            }
+            currentMaxDistance = distance;
             m_MiniGameManager.SubmitScoreRpc(distance, XRINetworkPlayer.LocalPlayer.OwnerClientId);
         }
 

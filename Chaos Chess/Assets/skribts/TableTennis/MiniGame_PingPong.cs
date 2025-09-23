@@ -35,7 +35,7 @@ namespace XRMultiplayer.MiniGames
         {
             base.StartGame();
             Debug.Log("--- MiniGame_PingPong.StartGame() ---");
-            m_NetworkedGameplay.SpawnBall();
+            m_NetworkedGameplay.SpawnBall(m_NetworkedGameplay.IsOwner);
         }
 
         /// <inheritdoc/>

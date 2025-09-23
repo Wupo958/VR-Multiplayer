@@ -25,8 +25,10 @@ namespace XRMultiplayer.MiniGames
             //m_RandomSeed.OnValueChanged -= OnSeedChanged;
         }
 
-        public void SpawnBall()
+        public void SpawnBall(bool isServer)
         {
+            if (!isServer) return;
+
             Debug.Log("sapwntBalls");
             if (m_MiniGame.player1Turn == true)
             {

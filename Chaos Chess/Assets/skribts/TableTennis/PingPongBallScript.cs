@@ -9,7 +9,7 @@ public class PingPongBallScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            networkedPingPong.SpawnBall();
+            networkedPingPong.SpawnBall(networkedPingPong.IsOwner);
             Destroy(gameObject);
         }
     }

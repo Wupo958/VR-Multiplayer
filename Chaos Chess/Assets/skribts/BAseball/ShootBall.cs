@@ -1,19 +1,21 @@
 using UnityEngine;
+using XRMultiplayer.MiniGames;
 
 public class ShootBall : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private GameObject ballPrefab; // Muss einen Rigidbody + Collider haben
-    [SerializeField] private Transform firePoint;   // Da spawnt der Ball (Position + Richtung)
+    [SerializeField] private GameObject ballPrefab;
+    [SerializeField] private Transform firePoint;
 
     [Header("Schuss-Settings")]
-    [SerializeField] private float muzzleSpeed = 45f; // m/s entlang firePoint.forward
+    [SerializeField] private float muzzleSpeed = 45f; 
     [SerializeField] private bool useGravity = true;
-    [SerializeField] private bool inheritLauncherVelocity = true; // Startgeschw. des Werfers addieren
-    [SerializeField] private float lifeTime = 15f; // Auto-Despawn
+    [SerializeField] private bool inheritLauncherVelocity = true; 
+    [SerializeField] private float lifeTime = 10f;
 
     [Header("Optional: misc")]
     [SerializeField] public bool shooting = false;
+    [SerializeField] private networkedBaseball networkedBaseball;
     private float nextShootTime = 2.5f;
 
     private void Start()
@@ -26,13 +28,15 @@ public class ShootBall : MonoBehaviour
         nextShootTime -= Time.deltaTime;
         if (shooting && nextShootTime < 0)
         {
-            Fire();
+            Fire(networkedBaseball.IsOwner);
             nextShootTime = 2.5f;
         }
     }
 
-    public void Fire()
+    public void Fire(bool isServer)
     {
+        if (!isServer) return;
+
         if (Time.time < nextShootTime) return;
         if (!ballPrefab)
         {
