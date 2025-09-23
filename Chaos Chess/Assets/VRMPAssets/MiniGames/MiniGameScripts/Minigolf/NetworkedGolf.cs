@@ -167,9 +167,11 @@ namespace XRMultiplayer.MiniGames
 
         public void BringBackBalls()
         {
+            // This function will only be called on the server, which is correct.
             GameObject[] balls = GameObject.FindGameObjectsWithTag("GolfBall");
-            var spawnPoints = new System.Collections.Generic.List<Transform>();
+            if (balls.Length == 0) return;
 
+            var spawnPoints = new System.Collections.Generic.List<Transform>();
             Transform startPiece = m_SpawnedCoursePieces[0].transform;
             foreach (Transform child in startPiece)
             {
@@ -179,10 +181,35 @@ namespace XRMultiplayer.MiniGames
                 }
             }
 
-            Debug.Log("Bringing back balls to start positions.");
+            if (spawnPoints.Count == 0) return;
 
-            balls[0].transform.position = spawnPoints[0].position;
-            balls[1].transform.position = spawnPoints[1].position;
+            Debug.Log($"Duct Tape Fix: Found {balls.Length} balls. Teleporting them back to {spawnPoints.Count} spawn points.");
+
+            // Loop through all found balls and assign them to a spawn point.
+            // This is safer than assuming balls[0] and balls[1] exist.
+            for (int i = 0; i < balls.Length; i++)
+            {
+                // Make sure we have a spawn point for this ball
+                if (i < spawnPoints.Count)
+                {
+                    GameObject ball = balls[i];
+                    Transform spawnPoint = spawnPoints[i];
+
+                    // Get the Rigidbody component
+                    Rigidbody rb = ball.GetComponent<Rigidbody>();
+
+                    // IMPORTANT: Reset physics before teleporting
+                    if (rb != null)
+                    {
+                        rb.linearVelocity = Vector3.zero;
+                        rb.angularVelocity = Vector3.zero;
+                    }
+
+                    // Now, set the position. The NetworkTransform will sync this.
+                    ball.transform.position = spawnPoint.position;
+                    ball.transform.rotation = spawnPoint.rotation;
+                }
+            }
         }
 
         public void SpawnPlayerBalls(IReadOnlyList<ulong> playersInGame, bool isServer)
