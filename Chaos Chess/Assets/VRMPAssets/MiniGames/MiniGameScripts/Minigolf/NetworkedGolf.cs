@@ -30,6 +30,8 @@ namespace XRMultiplayer.MiniGames
 
         [SerializeField] private GameObject m_GolfBallPrefab;
 
+        [SerializeField] private GameObject m_GolfBallPrefabRed;
+
         private MiniGame_Golf m_MiniGame;
 
         private List<GameObject> m_SpawnedCoursePieces = new List<GameObject>();
@@ -235,18 +237,20 @@ namespace XRMultiplayer.MiniGames
                 return;
             }
 
-            for (int i = 0; i < playersInGame.Count; i++)
-            {
-                ulong clientId = playersInGame[i];
-                Transform spawnPoint = spawnPoints[i];
+            ulong clientId;
+            Transform spawnPoint;
 
-                Debug.Log("Spawning ball for client " + clientId);
+            clientId = playersInGame[0];
+            spawnPoint = spawnPoints[0];
+            GameObject ballInstance = Instantiate(m_GolfBallPrefab, spawnPoint.position, Quaternion.identity);
+            NetworkObject ballNetObj = ballInstance.GetComponent<NetworkObject>();
+            ballNetObj.SpawnWithOwnership(clientId);
 
-                GameObject ballGo = Instantiate(m_GolfBallPrefab, spawnPoint.position, Quaternion.identity);
-                ballGo.name = $"GolfBall_Player_{clientId}";
-                ballGo.transform.position = spawnPoint.position;
-                ballGo.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                NetworkObject ballNetObj = ballGo.GetComponent<NetworkObject>();
+            if (playersInGame.Count > 1) {
+                clientId = playersInGame[1];
+                spawnPoint = spawnPoints[1];
+                ballInstance = Instantiate(m_GolfBallPrefabRed, spawnPoint.position, Quaternion.identity);
+                ballNetObj = ballInstance.GetComponent<NetworkObject>();
                 ballNetObj.SpawnWithOwnership(clientId);
             }
         }
