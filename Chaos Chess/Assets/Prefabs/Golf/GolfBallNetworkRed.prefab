@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2232463039640217809}
   - component: {fileID: -897588248615085304}
   - component: {fileID: 6021308328484883450}
+  - component: {fileID: 3581567700097158403}
   - component: {fileID: 4069547007374983651}
   m_Layer: 0
   m_Name: GolfBallNetworkRed
@@ -141,8 +142,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 8381435257041246, guid: 1aa475542a6630d41a9ae1ca8769aad1,
-    type: 3}
+  m_AttachTransform: {fileID: 2458398648897810457}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 1
   m_MatchAttachPosition: 1
@@ -333,6 +333,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: VRMP::GolfBall
   ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &3581567700097158403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078824041384897615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkRigidbody
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkRigidbodyBaseExpanded: 0
+  UseRigidBodyForMotion: 0
+  AutoUpdateKinematicState: 1
+  AutoSetKinematicOnDespawn: 1
 --- !u!205 &4069547007374983651
 LODGroup:
   m_ObjectHideFlags: 0
