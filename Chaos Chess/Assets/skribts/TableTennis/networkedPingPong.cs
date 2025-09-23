@@ -9,9 +9,8 @@ namespace XRMultiplayer.MiniGames
         [Header("Ballmaschinen")]
         [SerializeField] private GameObject ball;
         [SerializeField] private GameObject spawnedBall;
-        [SerializeField] GameObject ballSpawnPlayer1;
-        [SerializeField] GameObject ballSpawnPlayer2;
-
+        [SerializeField] private GameObject ballSpawnPlayer1;
+        [SerializeField] private GameObject ballSpawnPlayer2;
 
         private MiniGame_PingPong m_MiniGame;
 
@@ -26,25 +25,70 @@ namespace XRMultiplayer.MiniGames
             //m_RandomSeed.OnValueChanged -= OnSeedChanged;
         }
 
+        
         public void SpawnBall()
         {
-            Debug.Log("sapwntBalls");
-            if(m_MiniGame.player1Turn == true)
+            if (IsServer)
             {
-                Debug.Log("sapwntBalls2");
-                spawnedBall = Instantiate(ball, ballSpawnPlayer1.transform);
-                spawnedBall.transform.position = ballSpawnPlayer1.transform.position;
-                spawnedBall.GetComponent<PingPongBallScript>().networkedPingPong = gameObject.GetComponent<networkedPingPong>();
-                m_MiniGame.player1Turn = false;
+                SpawnBallServer();
             }
             else
             {
-                Debug.Log("sapwntBalls2");
-                spawnedBall = Instantiate(ball, ballSpawnPlayer2.transform);
-                spawnedBall.transform.position = ballSpawnPlayer2.transform.position;
-                spawnedBall.GetComponent<PingPongBallScript>().networkedPingPong = gameObject.GetComponent<networkedPingPong>();
-                m_MiniGame.player1Turn = true;
+                SpawnBallServerRpc();
             }
+        }
+
+        
+        [ServerRpc(RequireOwnership = false)]
+        private void SpawnBallServerRpc()
+        {
+            SpawnBallServer();
+        }
+
+        
+        private void SpawnBallServer()
+        {
+            Debug.Log("SpawnBall (Server)");
+
+            
+            if (spawnedBall != null)
+            {
+                var oldNO = spawnedBall.GetComponent<NetworkObject>();
+                if (oldNO != null && oldNO.IsSpawned)
+                    oldNO.Despawn();
+                Destroy(spawnedBall);
+                spawnedBall = null;
+            }
+
+           
+            var spawnGO = m_MiniGame.player1Turn ? ballSpawnPlayer1 : ballSpawnPlayer2;
+            var spawnPos = spawnGO.transform.position;
+            var spawnRot = spawnGO.transform.rotation;
+
+            
+            var instance = Instantiate(ball, spawnPos, spawnRot);
+
+            
+            var netObj = instance.GetComponent<NetworkObject>();
+            if (netObj == null)
+            {
+                Debug.LogError("Ball-Prefab hat keine NetworkObject-Komponente!");
+                Destroy(instance);
+                return;
+            }
+            netObj.Spawn(true);
+
+            // Referenzen setzen
+            var ballScript = instance.GetComponent<PingPongBallScript>();
+            if (ballScript != null)
+            {
+                ballScript.networkedPingPong = this;
+            }
+
+            spawnedBall = instance;
+
+            
+            m_MiniGame.player1Turn = !m_MiniGame.player1Turn;
         }
     }
 }

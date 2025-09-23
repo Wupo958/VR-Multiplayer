@@ -29,6 +29,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaseBallnetwork Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2838131064367532738, guid: 1aa475542a6630d41a9ae1ca8769aad1,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 3576456621945320947, guid: 1aa475542a6630d41a9ae1ca8769aad1,
         type: 3}
       propertyPath: m_LocalScale.x
