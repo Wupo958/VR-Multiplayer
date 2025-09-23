@@ -198,6 +198,7 @@ namespace XRMultiplayer.MiniGames
                 Debug.Log("Spawning ball for client " + clientId);
 
                 GameObject ballGo = Instantiate(m_GolfBallPrefab, spawnPoint.position, Quaternion.identity);
+                ballGo.transform.position = spawnPoint.position;
                 ballGo.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 NetworkObject ballNetObj = ballGo.GetComponent<NetworkObject>();
                 ballNetObj.SpawnWithOwnership(clientId);
