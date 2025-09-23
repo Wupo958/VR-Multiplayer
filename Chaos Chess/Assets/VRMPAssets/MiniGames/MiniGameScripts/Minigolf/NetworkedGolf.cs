@@ -197,50 +197,10 @@ namespace XRMultiplayer.MiniGames
 
                 Debug.Log("Spawning ball for client " + clientId);
 
-                GameObject ballGo = Instantiate(m_GolfBallPrefab, spawnPoint.position, spawnPoint.rotation, m_CourseParent);
+                GameObject ballGo = Instantiate(m_GolfBallPrefab, spawnPoint.position, spawnPoint.rotation);
                 NetworkObject ballNetObj = ballGo.GetComponent<NetworkObject>();
                 ballNetObj.SpawnWithOwnership(clientId);
-
-                StartCoroutine(WatchBall(ballGo, clientId));
             }
-        }
-
-        private System.Collections.IEnumerator WatchBall(GameObject ballInstance, ulong ownerId)
-        {
-            // Wait one frame to ensure all components are initialized
-            yield return null;
-
-            if (ballInstance == null)
-            {
-                Debug.LogError($"[Ball Debugger for Client {ownerId}] Ball was destroyed before debugging could start!");
-                yield break;
-            }
-
-            Debug.Log($"[Ball Debugger for Client {ownerId}] Started watching ball '{ballInstance.name}'.");
-
-            var collider = ballInstance.GetComponent<Collider>();
-            var rigidbody = ballInstance.GetComponent<Rigidbody>();
-            float timer = 5.0f;
-
-            while (timer > 0)
-            {
-                if (ballInstance == null)
-                {
-                    Debug.LogError($"[Ball Debugger for Client {ownerId}] Ball was destroyed unexpectedly!");
-                    yield break;
-                }
-
-                // Print the status of the ball to the console
-                Debug.Log($"[Ball Debugger for Client {ownerId}] Time: {timer:F1}s | " +
-                            $"Active: {ballInstance.activeSelf} | " +
-                            $"Collider Enabled: {collider.enabled} | " +
-                            $"Position: {ballInstance.transform.position.ToString("F2")}");
-
-                timer -= Time.deltaTime;
-                yield return null;
-            }
-
-            Debug.Log($"[Ball Debugger for Client {ownerId}] Finished watching ball.");
         }
 
     }
