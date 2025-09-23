@@ -85,12 +85,6 @@ namespace XRMultiplayer.MiniGames
         public override void StartGame()
         {
             base.StartGame();
-            if (m_NetworkedGameplay.IsOwner)
-            {
-                List<ulong> playerIds = m_MiniGameManager.currentPlayerDictionary.Keys.Select(p => p.OwnerClientId).ToList();
-
-                StartCoroutine(m_NetworkedGameplay.SpawnPlayerBalls(playerIds, m_NetworkedGameplay.IsOwner));
-            }
         }
 
         public override void FinishGame(bool submitScore = true)
@@ -119,7 +113,7 @@ namespace XRMultiplayer.MiniGames
             if (m_MiniGameManager.currentNetworkedGameState != MiniGameManager.GameState.InGame) return;
 
             XRBaseInteractable interactable = (XRBaseInteractable)args.interactableObject;
-            if (m_InteractablePoses.ContainsKey(interactable))
+            if (m_InteractablePoses.ContainsKey(interactable) && !interactable.CompareTag("GolfBall"))
             {
                 StartCoroutine(DropClubAfterTimeRoutine(interactable));
             }

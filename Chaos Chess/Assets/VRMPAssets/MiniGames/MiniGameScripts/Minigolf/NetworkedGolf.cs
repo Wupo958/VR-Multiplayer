@@ -150,60 +150,8 @@ namespace XRMultiplayer.MiniGames
 
             m_SpawnedCoursePieces.Clear();
 
-            GameObject[] balls = GameObject.FindGameObjectsWithTag("GolfBall");
+            
 
-            foreach (GameObject ball in balls)
-            {
-                if (ball.TryGetComponent<NetworkObject>(out var netObj))
-                {
-                    netObj.Despawn();
-                }
-                else
-                {
-                    Destroy(ball);
-                }
-            }
-
-        }
-
-        public IEnumerator SpawnPlayerBalls(IReadOnlyList<ulong> playersInGame, bool isServer)
-        {
-            if (!isServer) yield break;
-
-            Transform startPiece = m_SpawnedCoursePieces[0].transform;
-            var spawnPoints = new System.Collections.Generic.List<Transform>();
-            foreach (Transform child in startPiece)
-            {
-                if (child.CompareTag("BallSpawnPoint"))
-                {
-                    spawnPoints.Add(child);
-                }
-            }
-
-            if (spawnPoints.Count < playersInGame.Count)
-            {
-                Debug.LogError($"CRITICAL: Not enough spawn points! Have {spawnPoints.Count}, but need {playersInGame.Count}.");
-                yield break;
-            }
-
-            for (int i = 0; i < playersInGame.Count; i++)
-            {
-                ulong clientId = playersInGame[i];
-                Transform spawnPoint = spawnPoints[i];
-
-                GameObject ballGo = Instantiate(m_GolfBallPrefab, spawnPoint.position, Quaternion.identity);
-
-                NetworkObject ballNetObj = ballGo.GetComponent<NetworkObject>();
-                ballNetObj.SpawnWithOwnership(clientId);
-
-                yield return new WaitForEndOfFrame();
-
-                if (ballGo != null)
-                {
-                    ballGo.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                    Debug.Log($"Applied constraint override for ball owned by {clientId}");
-                }
-            }
         }
 
     }
