@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 7067077640088742047}
   - component: {fileID: 3916464032018823594}
   - component: {fileID: -8878612799570322800}
+  - component: {fileID: 1461861587699782140}
   m_Layer: 0
   m_Name: PingPongBallNetwork
   m_TagString: Untagged
@@ -239,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4067442549
+  GlobalObjectIdHash: 992802231
   InScenePlacedSourceGlobalObjectIdHash: 992802231
   DeferredDespawnTick: 0
   Ownership: 3
@@ -265,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  NetworkTransformExpanded: 0
+  NetworkTransformExpanded: 1
   AutoOwnerAuthorityTickOffset: 1
   PositionInterpolationType: 0
   RotationInterpolationType: 0
@@ -276,7 +277,7 @@ MonoBehaviour:
   RotationMaxInterpolationTime: 0.1
   ScaleLerpSmoothing: 1
   ScaleMaxInterpolationTime: 0.1
-  AuthorityMode: 1
+  AuthorityMode: 0
   TickSyncChildren: 0
   UseUnreliableDeltas: 0
   SyncPositionX: 1
@@ -385,7 +386,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3729cbc0dce4ad04b9221fd36b051b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PingPongBallScript
+  ShowTopMostFoldoutHeaderGroup: 1
   networkedPingPong: {fileID: 0}
+--- !u!114 &1461861587699782140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2838131064367532738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkRigidbody
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkRigidbodyBaseExpanded: 0
+  UseRigidBodyForMotion: 0
+  AutoUpdateKinematicState: 1
+  AutoSetKinematicOnDespawn: 1
 --- !u!1 &3339427006912821862
 GameObject:
   m_ObjectHideFlags: 0

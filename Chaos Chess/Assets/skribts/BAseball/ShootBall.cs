@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 using XRMultiplayer.MiniGames;
 
@@ -28,14 +29,13 @@ public class ShootBall : MonoBehaviour
         nextShootTime -= Time.deltaTime;
         if (shooting && nextShootTime < 0)
         {
-            Fire(networkedBaseball.IsOwner);
+            Fire();
             nextShootTime = 2.5f;
         }
     }
 
-    public void Fire(bool isServer)
+    public void Fire()
     {
-        if (!isServer) return;
 
         if (Time.time < nextShootTime) return;
         if (!ballPrefab)
@@ -43,8 +43,8 @@ public class ShootBall : MonoBehaviour
             Debug.LogWarning("ShootBall: Kein ballPrefab zugewiesen.");
             return;
         }
-
-        GameObject ball = Instantiate(ballPrefab, firePoint.position, firePoint.rotation);
+        GameObject ball = NetworkManager.Instantiate(ballPrefab, firePoint.position, firePoint.rotation);
+        //GameObject ball = Instantiate(ballPrefab, firePoint.position, firePoint.rotation);
 
         Rigidbody rb = ball.GetComponent<Rigidbody>();
         if (!rb) rb = ball.AddComponent<Rigidbody>();
