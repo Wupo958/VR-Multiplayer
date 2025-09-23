@@ -122,6 +122,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1746835135139711556}
+    - targetCorrespondingSourceObject: {fileID: 2838131064367532738, guid: 1aa475542a6630d41a9ae1ca8769aad1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -579030288266030666}
   m_SourcePrefab: {fileID: 100100000, guid: 1aa475542a6630d41a9ae1ca8769aad1, type: 3}
 --- !u!1 &1310918183164561367 stripped
 GameObject:
@@ -154,3 +158,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac5247541e5a0aa49a23999d57b752b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallTrackDistance
+--- !u!114 &-579030288266030666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310918183164561367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkRigidbody
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkRigidbodyBaseExpanded: 0
+  UseRigidBodyForMotion: 0
+  AutoUpdateKinematicState: 1
+  AutoSetKinematicOnDespawn: 1

@@ -5,8 +5,8 @@ using XRMultiplayer.MiniGames;
 public class networkedPingPong : NetworkBehaviour
 {
     [SerializeField] private GameObject ball;
-    [SerializeField] private Transform ballSpawnPlayer1;
-    [SerializeField] private Transform ballSpawnPlayer2;
+    [SerializeField] private GameObject ballSpawnPlayer1;
+    [SerializeField] private GameObject ballSpawnPlayer2;
 
     private MiniGame_PingPong m_MiniGame;
 
@@ -16,14 +16,13 @@ public class networkedPingPong : NetworkBehaviour
     }
 
     // in networkedPingPong
-    [ServerRpc(RequireOwnership = false)]
-    public void RequestSpawnBallServerRpc()
+    public void spawnBall()
     {
         Transform spawn = m_MiniGame.player1Turn ? ballSpawnPlayer1.transform : ballSpawnPlayer2.transform;
 
-        GameObject go = Instantiate(ball, spawn.position, spawn.rotation);
+        GameObject go = NetworkObject.Instantiate(ball, spawn.position, spawn.rotation);
         var no = go.GetComponent<NetworkObject>();
-        no.Spawn(); // Ownership optional vergeben, falls nötig
+        
 
         m_MiniGame.player1Turn = !m_MiniGame.player1Turn;
     }

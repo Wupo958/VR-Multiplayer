@@ -11,7 +11,7 @@ public class PingPongBallScript : NetworkBehaviour
 
         if (collision.gameObject.CompareTag("Ground"))
         {
-            networkedPingPong.RequestSpawnBallServerRpc();
+            networkedPingPong.spawnBall();
             GetComponent<NetworkObject>().Despawn(true); // statt Destroy()
         }
     }

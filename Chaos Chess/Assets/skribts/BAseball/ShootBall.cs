@@ -43,7 +43,7 @@ public class ShootBall : MonoBehaviour
             Debug.LogWarning("ShootBall: Kein ballPrefab zugewiesen.");
             return;
         }
-        GameObject ball = NetworkManager.Instantiate(ballPrefab, firePoint.position, firePoint.rotation);
+        GameObject ball = NetworkObject.Instantiate(ballPrefab, firePoint.position, firePoint.rotation);
         //GameObject ball = Instantiate(ballPrefab, firePoint.position, firePoint.rotation);
 
         Rigidbody rb = ball.GetComponent<Rigidbody>();
