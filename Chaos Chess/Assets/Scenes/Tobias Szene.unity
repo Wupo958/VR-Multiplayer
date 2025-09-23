@@ -1543,6 +1543,12 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7630059196039519624, guid: ca990998008890246b9c6644cda3bf2f,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 5c56cf3e399ee9b48ac76a52cc7afd52,
+        type: 2}
     - target: {fileID: 8647014645231343631, guid: ca990998008890246b9c6644cda3bf2f,
         type: 3}
       propertyPath: GlobalObjectIdHash
