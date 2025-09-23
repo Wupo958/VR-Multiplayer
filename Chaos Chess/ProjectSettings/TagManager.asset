@@ -11,6 +11,7 @@ TagManager:
   - Destroyer
   - GolfBall
   - bat
+  - Ground
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,5 @@
-using Unity.Services.Vivox;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
+
 
 public class ShootBall : MonoBehaviour
 {
@@ -13,7 +12,7 @@ public class ShootBall : MonoBehaviour
     [SerializeField] private float muzzleSpeed = 45f; // m/s entlang firePoint.forward
     [SerializeField] private bool useGravity = true;
     [SerializeField] private bool inheritLauncherVelocity = true; // Startgeschw. des Werfers addieren
-    [SerializeField] private float lifeTime = 8f;    // Auto-Despawn
+    [SerializeField] private float lifeTime = 15f;    // Auto-Despawn
 
     [Header("Optional: misc")]
     [SerializeField] public bool shooting = false;
@@ -34,45 +33,41 @@ public class ShootBall : MonoBehaviour
         }
     }
 
-    // --- Manuell aufrufen (UI Button, XR-Event, Input Action) ---
-    public Rigidbody Fire()
+    public void Fire()
     {
-        if (Time.time < nextShootTime) return null;
+        if (Time.time < nextShootTime) return;
         if (!ballPrefab)
         {
             Debug.LogWarning("ShootBall: Kein ballPrefab zugewiesen.");
-            return null;
+            return;
         }
 
-        // Ball instanziieren
         GameObject ball = Instantiate(ballPrefab, firePoint.position, firePoint.rotation);
 
-        // Rigidbody holen/absichern
+        
         Rigidbody rb = ball.GetComponent<Rigidbody>();
         if (!rb) rb = ball.AddComponent<Rigidbody>();
         rb.useGravity = useGravity;
         rb.isKinematic = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic; // weniger Tunneling
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
-        // Startgeschwindigkeit berechnen
-        Vector3 v = firePoint.forward * -muzzleSpeed; // falls nötig Richtung umdrehen: * -muzzleSpeed
+        
+        Vector3 v = firePoint.forward * -muzzleSpeed;
 
-        // Geschwindigkeit des Launchers addieren (falls der Shooter sich bewegt)
+        
         if (inheritLauncherVelocity)
         {
             var shooterRb = GetComponentInParent<Rigidbody>();
-            if (shooterRb) v += shooterRb.linearVelocity; // <-- korrekt: velocity
+            if (shooterRb) v += shooterRb.linearVelocity;
         }
 
         rb.linearVelocity = v;
 
-        // kleiner Up-Impuls (optional)
+        
         rb.AddForce(Vector3.up * 3f, ForceMode.Impulse);
 
-        // Sicherheit: nach X Sekunden zerstören
+        
         if (lifeTime > 0f) Destroy(ball, lifeTime);
-
-        return rb;
     }
 }

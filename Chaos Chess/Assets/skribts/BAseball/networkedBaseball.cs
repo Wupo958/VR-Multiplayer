@@ -4,10 +4,7 @@ using System.Collections.Generic;
 
 namespace XRMultiplayer.MiniGames
 {
-    /// <summary>
-    /// NetworkedBaseball spawnt für jeden Spieler eine eigene Ballmaschine
-    /// und verwaltet deren Lebenszyklus (Join/Leave).
-    /// </summary>
+    
     public class networkedBaseball : NetworkBehaviour
     {
         [Header("Ballmaschinen")]

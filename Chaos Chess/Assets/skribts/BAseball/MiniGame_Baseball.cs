@@ -1,6 +1,4 @@
 using UnityEngine;
-using Unity.Netcode; // Für OwnerClientId
-using XRMultiplayer.MiniGames;
 using System.Collections.Generic;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -8,21 +6,14 @@ using System.Collections;
 
 namespace XRMultiplayer.MiniGames
 {
-    /// <summary>
-    /// Manages the local state and lifecycle of the Baseball minigame.
-    /// </summary>
     public class MiniGame_Baseball : MiniGameBase
     {
-        /// <summary>
-        /// Reference to the networked component that handles synchronized actions (spawns one ball machine per player).
-        /// </summary>
+       
         [SerializeField] private networkedBaseball m_NetworkedGameplay;
         [SerializeField] float m_BatResetTime = .25f;
         readonly Dictionary<XRBaseInteractable, Pose> m_InteractablePoses = new();
 
-        /// <summary>
-        /// Local player's current hit count (or points).
-        /// </summary>
+   
         private int m_CurrentHits = 0;
 
         /// <inheritdoc/>
@@ -49,9 +40,6 @@ namespace XRMultiplayer.MiniGames
             Debug.Log($"Baseball finished with {m_CurrentHits} hits/points.");
         }
 
-        /// <summary>
-        /// Call this when the local player successfully hits a ball or scores points.
-        /// </summary>
         public void SetDistance(int distance)
         {
             m_MiniGameManager.SubmitScoreRpc(distance, XRINetworkPlayer.LocalPlayer.OwnerClientId);

@@ -10,7 +10,7 @@ public class NetworkProjectile : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        // Nur der Server simuliert Physik; Clients zeigen nur die Sync-Transform an
+        
         if (IsServer)
         {
             rb.isKinematic = false;
@@ -18,8 +18,8 @@ public class NetworkProjectile : NetworkBehaviour
         }
         else
         {
-            rb.isKinematic = true;       // keine Client-Physik
-            rb.detectCollisions = false; // optional, reduziert Kosten
+            rb.isKinematic = true;
+            rb.detectCollisions = false;
         }
     }
 }
