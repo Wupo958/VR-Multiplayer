@@ -174,19 +174,73 @@ namespace XRMultiplayer.MiniGames
 
             Debug.Log("Not server");
             Transform startPiece = m_SpawnedCoursePieces[0].transform;
-            Transform ballSpawnPoint = startPiece.Find("BallSpawnPoint");
+            var spawnPoints = new System.Collections.Generic.List<Transform>();
 
-            foreach (var clientId in playersInGame)
+            foreach (Transform child in startPiece)
             {
-                Debug.Log("------ PLAYER IN GAME ------ Spawning ball for clientId: " + clientId);
-                GameObject ballGo = Instantiate(m_GolfBallPrefab, ballSpawnPoint.position + m_spawn_offset, Quaternion.identity);
-                ballGo.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                if (child.CompareTag("BallSpawnPoint"))
+                {
+                    spawnPoints.Add(child);
+                }
+            }
+
+            if (spawnPoints.Count < playersInGame.Count)
+            {
+                Debug.LogError($"CRITICAL: Not enough spawn points! Have {spawnPoints.Count}, but need {playersInGame.Count}.");
+                return;
+            }
+
+            for (int i = 0; i < playersInGame.Count; i++)
+            {
+                ulong clientId = playersInGame[i];
+                Transform spawnPoint = spawnPoints[i];
+
+                Debug.Log("Spawning ball for client " + clientId);
+
+                GameObject ballGo = Instantiate(m_GolfBallPrefab, spawnPoint.position, spawnPoint.rotation, m_CourseParent);
                 NetworkObject ballNetObj = ballGo.GetComponent<NetworkObject>();
-            
                 ballNetObj.SpawnWithOwnership(clientId);
 
-                m_spawn_offset.x += 10;
+                StartCoroutine(WatchBall(ballGo, clientId));
             }
+        }
+
+        private System.Collections.IEnumerator WatchBall(GameObject ballInstance, ulong ownerId)
+        {
+            // Wait one frame to ensure all components are initialized
+            yield return null;
+
+            if (ballInstance == null)
+            {
+                Debug.LogError($"[Ball Debugger for Client {ownerId}] Ball was destroyed before debugging could start!");
+                yield break;
+            }
+
+            Debug.Log($"[Ball Debugger for Client {ownerId}] Started watching ball '{ballInstance.name}'.");
+
+            var collider = ballInstance.GetComponent<Collider>();
+            var rigidbody = ballInstance.GetComponent<Rigidbody>();
+            float timer = 5.0f;
+
+            while (timer > 0)
+            {
+                if (ballInstance == null)
+                {
+                    Debug.LogError($"[Ball Debugger for Client {ownerId}] Ball was destroyed unexpectedly!");
+                    yield break;
+                }
+
+                // Print the status of the ball to the console
+                Debug.Log($"[Ball Debugger for Client {ownerId}] Time: {timer:F1}s | " +
+                            $"Active: {ballInstance.activeSelf} | " +
+                            $"Collider Enabled: {collider.enabled} | " +
+                            $"Position: {ballInstance.transform.position.ToString("F2")}");
+
+                timer -= Time.deltaTime;
+                yield return null;
+            }
+
+            Debug.Log($"[Ball Debugger for Client {ownerId}] Finished watching ball.");
         }
 
     }
