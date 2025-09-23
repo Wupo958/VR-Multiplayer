@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 7067077640088742047}
   - component: {fileID: 3916464032018823594}
   - component: {fileID: -8878612799570322800}
+  - component: {fileID: -8273712154806901173}
   m_Layer: 0
   m_Name: PingPongBallNetwork
   m_TagString: Untagged
@@ -386,7 +387,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PingPongBallScript
   ShowTopMostFoldoutHeaderGroup: 1
-  maxSpeed: 1.5
+  maxSpeed: 1
+--- !u!114 &-8273712154806901173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2838131064367532738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkRigidbody
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkRigidbodyBaseExpanded: 0
+  UseRigidBodyForMotion: 0
+  AutoUpdateKinematicState: 1
+  AutoSetKinematicOnDespawn: 1
 --- !u!1 &3339427006912821862
 GameObject:
   m_ObjectHideFlags: 0
