@@ -84,30 +84,13 @@ namespace XRMultiplayer.MiniGames
 
         public override void StartGame()
         {
-
             base.StartGame();
             if (m_NetworkedGameplay.IsOwner)
             {
-                StartCoroutine(StartGameAndBringBallsBack());
-            }
+                List<ulong> playerIds = m_MiniGameManager.currentPlayerDictionary.Keys.Select(p => p.OwnerClientId).ToList();
 
-        }
-
-        private IEnumerator StartGameAndBringBallsBack()
-        {
-            // Get the list of players
-            List<ulong> playerIds = m_MiniGameManager.currentPlayerDictionary.Keys.Select(p => p.OwnerClientId).ToList();
-
-            // 1. Spawn the balls like before.
-            m_NetworkedGameplay.SpawnPlayerBalls(playerIds, m_NetworkedGameplay.IsOwner);
-
-            // 2. Wait for 500 milliseconds (0.5 seconds).
-            yield return new WaitForSeconds(0.5f);
-
-            // 3. After the delay, call the function to teleport the balls back.
-            if (playerIds.Count > 1)
-            {
-                m_NetworkedGameplay.BringBackBalls();
+                // Call the function directly again.
+                m_NetworkedGameplay.SpawnPlayerBalls(playerIds, m_NetworkedGameplay.IsOwner);
             }
         }
 
