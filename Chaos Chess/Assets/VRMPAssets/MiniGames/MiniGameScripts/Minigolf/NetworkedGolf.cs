@@ -30,8 +30,6 @@ namespace XRMultiplayer.MiniGames
 
         [SerializeField] private GameObject m_GolfBallPrefab;
 
-        [SerializeField] private GameObject m_GolfBallPrefabRed;
-
         private MiniGame_Golf m_MiniGame;
 
         private List<GameObject> m_SpawnedCoursePieces = new List<GameObject>();
@@ -216,10 +214,8 @@ namespace XRMultiplayer.MiniGames
 
         public void SpawnPlayerBalls(IReadOnlyList<ulong> playersInGame, bool isServer)
         {
-            Debug.Log("Called SpawnPlayerBalls() on server to spawn balls for players.");
             if (!isServer) return;
 
-            Debug.Log("Not server");
             Transform startPiece = m_SpawnedCoursePieces[0].transform;
             var spawnPoints = new System.Collections.Generic.List<Transform>();
 
@@ -237,20 +233,18 @@ namespace XRMultiplayer.MiniGames
                 return;
             }
 
-            ulong clientId;
-            Transform spawnPoint;
+            for (int i = 0; i < playersInGame.Count; i++)
+            {
+                ulong clientId = playersInGame[i];
+                Transform spawnPoint = spawnPoints[i];
 
-            clientId = playersInGame[0];
-            spawnPoint = spawnPoints[0];
-            GameObject ballInstance = Instantiate(m_GolfBallPrefab, spawnPoint.position, Quaternion.identity);
-            NetworkObject ballNetObj = ballInstance.GetComponent<NetworkObject>();
-            ballNetObj.SpawnWithOwnership(clientId);
+                Debug.Log("Spawning ball for client " + clientId);
 
-            if (playersInGame.Count > 1) {
-                clientId = playersInGame[1];
-                spawnPoint = spawnPoints[1];
-                ballInstance = Instantiate(m_GolfBallPrefabRed, spawnPoint.position, Quaternion.identity);
-                ballNetObj = ballInstance.GetComponent<NetworkObject>();
+                GameObject ballGo = Instantiate(m_GolfBallPrefab, spawnPoint.position, Quaternion.identity);
+
+                ballGo.name = $"GolfBall_Client_{clientId}";
+
+                NetworkObject ballNetObj = ballGo.GetComponent<NetworkObject>();
                 ballNetObj.SpawnWithOwnership(clientId);
             }
         }

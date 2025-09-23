@@ -89,7 +89,6 @@ namespace XRMultiplayer.MiniGames
             {
                 List<ulong> playerIds = m_MiniGameManager.currentPlayerDictionary.Keys.Select(p => p.OwnerClientId).ToList();
 
-                // Call the function directly again.
                 m_NetworkedGameplay.SpawnPlayerBalls(playerIds, m_NetworkedGameplay.IsOwner);
             }
         }
