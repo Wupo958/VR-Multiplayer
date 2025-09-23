@@ -3,6 +3,7 @@ using UnityEngine;
 using Unity.Netcode;
 
 using System.Collections.Generic;
+using System.Collections;
 
 
 namespace XRMultiplayer.MiniGames
@@ -165,60 +166,12 @@ namespace XRMultiplayer.MiniGames
 
         }
 
-        public void BringBackBalls()
+        public IEnumerator SpawnPlayerBalls(IReadOnlyList<ulong> playersInGame, bool isServer)
         {
-            // This function will only be called on the server, which is correct.
-            GameObject[] balls = GameObject.FindGameObjectsWithTag("GolfBall");
-            if (balls.Length == 0) return;
-
-            var spawnPoints = new System.Collections.Generic.List<Transform>();
-            Transform startPiece = m_SpawnedCoursePieces[0].transform;
-            foreach (Transform child in startPiece)
-            {
-                if (child.CompareTag("BallSpawnPoint"))
-                {
-                    spawnPoints.Add(child);
-                }
-            }
-
-            if (spawnPoints.Count == 0) return;
-
-            Debug.Log($"Duct Tape Fix: Found {balls.Length} balls. Teleporting them back to {spawnPoints.Count} spawn points.");
-
-            // Loop through all found balls and assign them to a spawn point.
-            // This is safer than assuming balls[0] and balls[1] exist.
-            for (int i = 0; i < balls.Length; i++)
-            {
-                // Make sure we have a spawn point for this ball
-                if (i < spawnPoints.Count)
-                {
-                    GameObject ball = balls[i];
-                    Transform spawnPoint = spawnPoints[i];
-
-                    // Get the Rigidbody component
-                    Rigidbody rb = ball.GetComponent<Rigidbody>();
-
-                    // IMPORTANT: Reset physics before teleporting
-                    if (rb != null)
-                    {
-                        rb.linearVelocity = Vector3.zero;
-                        rb.angularVelocity = Vector3.zero;
-                    }
-
-                    // Now, set the position. The NetworkTransform will sync this.
-                    ball.transform.position = spawnPoint.position;
-                    ball.transform.rotation = spawnPoint.rotation;
-                }
-            }
-        }
-
-        public void SpawnPlayerBalls(IReadOnlyList<ulong> playersInGame, bool isServer)
-        {
-            if (!isServer) return;
+            if (!isServer) yield break;
 
             Transform startPiece = m_SpawnedCoursePieces[0].transform;
             var spawnPoints = new System.Collections.Generic.List<Transform>();
-
             foreach (Transform child in startPiece)
             {
                 if (child.CompareTag("BallSpawnPoint"))
@@ -230,7 +183,7 @@ namespace XRMultiplayer.MiniGames
             if (spawnPoints.Count < playersInGame.Count)
             {
                 Debug.LogError($"CRITICAL: Not enough spawn points! Have {spawnPoints.Count}, but need {playersInGame.Count}.");
-                return;
+                yield break;
             }
 
             for (int i = 0; i < playersInGame.Count; i++)
@@ -238,14 +191,18 @@ namespace XRMultiplayer.MiniGames
                 ulong clientId = playersInGame[i];
                 Transform spawnPoint = spawnPoints[i];
 
-                Debug.Log("Spawning ball for client " + clientId);
-
                 GameObject ballGo = Instantiate(m_GolfBallPrefab, spawnPoint.position, Quaternion.identity);
-
-                ballGo.name = $"GolfBall_Client_{clientId}";
 
                 NetworkObject ballNetObj = ballGo.GetComponent<NetworkObject>();
                 ballNetObj.SpawnWithOwnership(clientId);
+
+                yield return new WaitForEndOfFrame();
+
+                if (ballGo != null)
+                {
+                    ballGo.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    Debug.Log($"Applied constraint override for ball owned by {clientId}");
+                }
             }
         }
 
