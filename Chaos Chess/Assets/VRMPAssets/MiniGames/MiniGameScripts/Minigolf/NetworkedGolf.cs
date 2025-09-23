@@ -174,18 +174,33 @@ namespace XRMultiplayer.MiniGames
 
             Debug.Log("Not server");
             Transform startPiece = m_SpawnedCoursePieces[0].transform;
-            Transform ballSpawnPoint = startPiece.Find("BallSpawnPoint");
+            var spawnPoints = new System.Collections.Generic.List<Transform>();
 
-            foreach (var clientId in playersInGame)
+            foreach (Transform child in startPiece)
             {
-                Debug.Log("------ PLAYER IN GAME ------ Spawning ball for clientId: " + clientId);
-                GameObject ballGo = Instantiate(m_GolfBallPrefab, ballSpawnPoint.position + m_spawn_offset, Quaternion.identity);
+                if (child.CompareTag("BallSpawnPoint"))
+                {
+                    spawnPoints.Add(child);
+                }
+            }
+
+            if (spawnPoints.Count < playersInGame.Count)
+            {
+                Debug.LogError($"CRITICAL: Not enough spawn points! Have {spawnPoints.Count}, but need {playersInGame.Count}.");
+                return;
+            }
+
+            for (int i = 0; i < playersInGame.Count; i++)
+            {
+                ulong clientId = playersInGame[i];
+                Transform spawnPoint = spawnPoints[i];
+
+                Debug.Log("Spawning ball for client " + clientId);
+
+                GameObject ballGo = Instantiate(m_GolfBallPrefab, spawnPoint.position, Quaternion.identity);
                 ballGo.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 NetworkObject ballNetObj = ballGo.GetComponent<NetworkObject>();
-            
                 ballNetObj.SpawnWithOwnership(clientId);
-
-                m_spawn_offset.x += 10;
             }
         }
 
