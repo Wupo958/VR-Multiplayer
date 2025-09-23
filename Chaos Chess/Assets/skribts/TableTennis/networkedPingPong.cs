@@ -1,51 +1,35 @@
-using UnityEngine;
 using Unity.Netcode;
-using System.Collections.Generic;
+using UnityEngine;
+using XRMultiplayer.MiniGames;
 
-namespace XRMultiplayer.MiniGames
+public class networkedPingPong : NetworkBehaviour
 {
-    public class networkedPingPong : NetworkBehaviour
+    [SerializeField] private GameObject ball;
+    [SerializeField] private Transform ballSpawnPlayer1;
+    [SerializeField] private Transform ballSpawnPlayer2;
+
+    private MiniGame_PingPong m_MiniGame;
+
+    public override void OnNetworkSpawn()
     {
-        [Header("Ballmaschinen")]
-        [SerializeField] private GameObject ball;
-        [SerializeField] private GameObject spawnedBall;
-        [SerializeField] GameObject ballSpawnPlayer1;
-        [SerializeField] GameObject ballSpawnPlayer2;
+        TryGetComponent(out m_MiniGame);
+    }
 
-        private MiniGame_PingPong m_MiniGame;
+    // Client ruft das hier, Server spawnt wirklich
+    [ServerRpc(RequireOwnership = false)]
+    public void RequestSpawnBallServerRpc(ulong requesterClientId)
+    {
+        Transform spawn = m_MiniGame.player1Turn ? ballSpawnPlayer1 : ballSpawnPlayer2;
 
-        public override void OnNetworkSpawn()
-        {
-            Debug.Log("--- NetworkedGolf OnNetworkSpawn() CALLED ---");
-            TryGetComponent(out m_MiniGame);
-        }
+        GameObject go = Instantiate(ball, spawn.position, spawn.rotation);
+        var no = go.GetComponent<NetworkObject>();
+        // Optional Ownership: dem anfragenden Spieler geben
+        //no.SpawnWithOwnership(requesterClientId);
 
-        public override void OnNetworkDespawn()
-        {
-            //m_RandomSeed.OnValueChanged -= OnSeedChanged;
-        }
+        // Falls du keine Ownership brauchst:
+        no.Spawn();
 
-        public void SpawnBall(bool isServer)
-        {
-            if (!isServer) return;
-
-            Debug.Log("sapwntBalls");
-            if (m_MiniGame.player1Turn == true)
-            {
-                Debug.Log("sapwntBalls2");
-                spawnedBall = Instantiate(ball, ballSpawnPlayer1.transform);
-                spawnedBall.transform.position = ballSpawnPlayer1.transform.position;
-                spawnedBall.GetComponent<PingPongBallScript>().networkedPingPong = gameObject.GetComponent<networkedPingPong>();
-                m_MiniGame.player1Turn = false;
-            }
-            else
-            {
-                Debug.Log("sapwntBalls2");
-                spawnedBall = Instantiate(ball, ballSpawnPlayer2.transform);
-                spawnedBall.transform.position = ballSpawnPlayer2.transform.position;
-                spawnedBall.GetComponent<PingPongBallScript>().networkedPingPong = gameObject.GetComponent<networkedPingPong>();
-                m_MiniGame.player1Turn = true;
-            }
-        }
+        // Toggle Zug
+        m_MiniGame.player1Turn = !m_MiniGame.player1Turn;
     }
 }
