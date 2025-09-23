@@ -30,6 +30,7 @@ namespace XRMultiplayer.MiniGames
 
         [SerializeField] private GameObject m_GolfBallPrefab;
 
+        private Vector3 m_spawn_offset = new Vector3Int(0, 0, 0);
 
         private MiniGame_Golf m_MiniGame;
 
@@ -170,30 +171,21 @@ namespace XRMultiplayer.MiniGames
         {
             Debug.Log("Called SpawnPlayerBalls() on server to spawn balls for players.");
             if (!isServer) return;
-            
+
             Debug.Log("Not server");
             Transform startPiece = m_SpawnedCoursePieces[0].transform;
+            Transform ballSpawnPoint = startPiece.Find("BallSpawnPoint");
 
-            var spawnPoints = new System.Collections.Generic.List<Transform>();
-
-            foreach (Transform child in startPiece)
+            foreach (var clientId in playersInGame)
             {
-                if (child.CompareTag("BallSpawnPoint"))
-                {
-                    spawnPoints.Add(child);
-                }
-            }
-
-            for (int i = 0; i < playersInGame.Count; i++)
-            {
-                ulong clientId = playersInGame[i];
-                Transform spawnPoint = spawnPoints[i];
                 Debug.Log("------ PLAYER IN GAME ------ Spawning ball for clientId: " + clientId);
-                GameObject ballGo = Instantiate(m_GolfBallPrefab, spawnPoint.position, Quaternion.identity);
+                GameObject ballGo = Instantiate(m_GolfBallPrefab, ballSpawnPoint.position + m_spawn_offset, Quaternion.identity);
                 ballGo.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 NetworkObject ballNetObj = ballGo.GetComponent<NetworkObject>();
             
                 ballNetObj.SpawnWithOwnership(clientId);
+
+                m_spawn_offset.x += 10;
             }
         }
 
