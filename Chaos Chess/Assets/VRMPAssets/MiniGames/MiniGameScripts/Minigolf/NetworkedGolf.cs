@@ -3,7 +3,6 @@ using UnityEngine;
 using Unity.Netcode;
 
 using System.Collections.Generic;
-using System.Collections;
 
 
 namespace XRMultiplayer.MiniGames
@@ -168,9 +167,10 @@ namespace XRMultiplayer.MiniGames
 
         }
 
-        public IEnumerator SpawnPlayerBalls(IReadOnlyList<ulong> playersInGame)
+        public void SpawnPlayerBalls(IReadOnlyList<ulong> playersInGame, bool isServer)
         {
             Debug.Log("Called SpawnPlayerBalls() on server to spawn balls for players.");
+            if (!isServer) return;
 
             Debug.Log("Not server");
             Transform startPiece = m_SpawnedCoursePieces[0].transform;
@@ -187,7 +187,7 @@ namespace XRMultiplayer.MiniGames
             if (spawnPoints.Count < playersInGame.Count)
             {
                 Debug.LogError($"CRITICAL: Not enough spawn points! Have {spawnPoints.Count}, but need {playersInGame.Count}.");
-                yield break;
+                return;
             }
 
             for (int i = 0; i < playersInGame.Count; i++)
@@ -198,10 +198,10 @@ namespace XRMultiplayer.MiniGames
                 Debug.Log("Spawning ball for client " + clientId);
 
                 GameObject ballGo = Instantiate(m_GolfBallPrefab, spawnPoint.position, Quaternion.identity);
+                ballGo.transform.position = spawnPoint.position;
+                ballGo.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 NetworkObject ballNetObj = ballGo.GetComponent<NetworkObject>();
                 ballNetObj.SpawnWithOwnership(clientId);
-
-                yield return null;
             }
         }
 
