@@ -517,6 +517,8 @@ MonoBehaviour:
   m_CourseParent: {fileID: 0}
   m_GolfBallPrefab: {fileID: 2838131064367532738, guid: 1aa475542a6630d41a9ae1ca8769aad1,
     type: 3}
+  m_GolfBallPrefabRed: {fileID: 1078824041384897615, guid: a35f51496bdd7844c846908814740eea,
+    type: 3}
 --- !u!114 &-1145262328529408282
 MonoBehaviour:
   m_ObjectHideFlags: 0
