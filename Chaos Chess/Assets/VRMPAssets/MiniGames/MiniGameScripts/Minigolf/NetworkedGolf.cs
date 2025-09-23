@@ -150,9 +150,19 @@ namespace XRMultiplayer.MiniGames
 
             m_SpawnedCoursePieces.Clear();
 
-            GameObject ball = GameObject.FindWithTag("GolfBall");
+            GameObject[] balls = GameObject.FindGameObjectsWithTag("GolfBall");
 
-            Destroy(ball);
+            foreach (GameObject ball in balls)
+            {
+                if (ball.TryGetComponent<NetworkObject>(out var netObj))
+                {
+                    netObj.Despawn();
+                }
+                else
+                {
+                    Destroy(ball);
+                }
+            }
 
         }
 
@@ -160,15 +170,26 @@ namespace XRMultiplayer.MiniGames
         {
             Debug.Log("Called SpawnPlayerBalls() on server to spawn balls for players.");
             if (!isServer) return;
-
+            
             Debug.Log("Not server");
             Transform startPiece = m_SpawnedCoursePieces[0].transform;
-            Transform ballSpawnPoint = startPiece.Find("BallSpawnPoint");
 
-            foreach (var clientId in playersInGame)
+            var spawnPoints = new System.Collections.Generic.List<Transform>();
+
+            foreach (Transform child in startPiece)
             {
+                if (child.CompareTag("BallSpawnPoint"))
+                {
+                    spawnPoints.Add(child);
+                }
+            }
+
+            for (int i = 0; i < playersInGame.Count; i++)
+            {
+                ulong clientId = playersInGame[i];
+                Transform spawnPoint = spawnPoints[i];
                 Debug.Log("------ PLAYER IN GAME ------ Spawning ball for clientId: " + clientId);
-                GameObject ballGo = Instantiate(m_GolfBallPrefab, ballSpawnPoint.position, Quaternion.identity);
+                GameObject ballGo = Instantiate(m_GolfBallPrefab, spawnPoint.position, Quaternion.identity);
                 ballGo.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 NetworkObject ballNetObj = ballGo.GetComponent<NetworkObject>();
             

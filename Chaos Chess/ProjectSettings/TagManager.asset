@@ -12,6 +12,7 @@ TagManager:
   - GolfBall
   - bat
   - Ground
+  - BallSpawnPoint
   layers:
   - Default
   - TransparentFX
