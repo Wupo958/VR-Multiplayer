@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PingPongBallScript
   ShowTopMostFoldoutHeaderGroup: 1
-  maxSpeed: 1
+  maxSpeed: 5
 --- !u!114 &-8273712154806901173
 MonoBehaviour:
   m_ObjectHideFlags: 0
