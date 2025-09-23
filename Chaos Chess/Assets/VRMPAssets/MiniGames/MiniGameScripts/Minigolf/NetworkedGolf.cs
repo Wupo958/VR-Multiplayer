@@ -30,8 +30,6 @@ namespace XRMultiplayer.MiniGames
 
         [SerializeField] private GameObject m_GolfBallPrefab;
 
-        private Vector3 m_spawn_offset = new Vector3Int(0, 0, 0);
-
         private MiniGame_Golf m_MiniGame;
 
         private List<GameObject> m_SpawnedCoursePieces = new List<GameObject>();
@@ -165,6 +163,26 @@ namespace XRMultiplayer.MiniGames
                 }
             }
 
+        }
+
+        public void BringBackBalls()
+        {
+            GameObject[] balls = GameObject.FindGameObjectsWithTag("GolfBall");
+            var spawnPoints = new System.Collections.Generic.List<Transform>();
+
+            Transform startPiece = m_SpawnedCoursePieces[0].transform;
+            foreach (Transform child in startPiece)
+            {
+                if (child.CompareTag("BallSpawnPoint"))
+                {
+                    spawnPoints.Add(child);
+                }
+            }
+
+            Debug.Log("Bringing back balls to start positions.");
+
+            balls[0].transform.position = spawnPoints[0].position;
+            balls[1].transform.position = spawnPoints[1].position;
         }
 
         public void SpawnPlayerBalls(IReadOnlyList<ulong> playersInGame, bool isServer)

@@ -91,6 +91,12 @@ namespace XRMultiplayer.MiniGames
                 List<ulong> playerIds = m_MiniGameManager.currentPlayerDictionary.Keys.Select(p => p.OwnerClientId).ToList();
 
                 m_NetworkedGameplay.SpawnPlayerBalls(playerIds, m_NetworkedGameplay.IsOwner);
+
+                if(playerIds.Count > 1)
+                {
+                    
+                    m_NetworkedGameplay.BringBackBalls();
+                }
             }
 
         }
