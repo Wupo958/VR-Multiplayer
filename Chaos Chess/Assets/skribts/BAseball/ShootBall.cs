@@ -1,18 +1,19 @@
 using UnityEngine;
-using Unity.Netcode;
-using System.Collections;
 
-[RequireComponent(typeof(NetworkObject))]
-public class ShootBall : NetworkBehaviour
+public class ShootBall : MonoBehaviour
 {
-    [SerializeField] private GameObject ballPrefab;
-    [SerializeField] private Transform firePoint;
-    [SerializeField] private float muzzleSpeed = 45f;
-    [SerializeField] private bool useGravity = true;
-    [SerializeField] private bool inheritLauncherVelocity = true;
-    [SerializeField] private float lifeTime = 15f;
-    [SerializeField] public bool shooting = false;
+    [Header("Refs")]
+    [SerializeField] private GameObject ballPrefab; // Muss einen Rigidbody + Collider haben
+    [SerializeField] private Transform firePoint;   // Da spawnt der Ball (Position + Richtung)
 
+    [Header("Schuss-Settings")]
+    [SerializeField] private float muzzleSpeed = 45f; // m/s entlang firePoint.forward
+    [SerializeField] private bool useGravity = true;
+    [SerializeField] private bool inheritLauncherVelocity = true; // Startgeschw. des Werfers addieren
+    [SerializeField] private float lifeTime = 15f; // Auto-Despawn
+
+    [Header("Optional: misc")]
+    [SerializeField] public bool shooting = false;
     private float nextShootTime = 2.5f;
 
     private void Start()
@@ -23,7 +24,7 @@ public class ShootBall : NetworkBehaviour
     private void Update()
     {
         nextShootTime -= Time.deltaTime;
-        if (shooting && nextShootTime < 0f)
+        if (shooting && nextShootTime < 0)
         {
             Fire();
             nextShootTime = 2.5f;
@@ -32,37 +33,24 @@ public class ShootBall : NetworkBehaviour
 
     public void Fire()
     {
-        if (!ballPrefab) return;
+        if (Time.time < nextShootTime) return;
+        if (!ballPrefab)
+        {
+            Debug.LogWarning("ShootBall: Kein ballPrefab zugewiesen.");
+            return;
+        }
 
-        var pos = firePoint ? firePoint.position : transform.position;
-        var rot = firePoint ? firePoint.rotation : transform.rotation;
+        GameObject ball = Instantiate(ballPrefab, firePoint.position, firePoint.rotation);
 
-        if (IsServer)
-            FireServer(pos, rot);
-        else
-            FireServerRpc(pos, rot);
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    private void FireServerRpc(Vector3 pos, Quaternion rot)
-    {
-        FireServer(pos, rot);
-    }
-
-    private void FireServer(Vector3 pos, Quaternion rot)
-    {
-        var ball = Instantiate(ballPrefab, pos, rot);
-        var no = ball.GetComponent<NetworkObject>();
-        if (no) no.Spawn(true);
-
-        var rb = ball.GetComponent<Rigidbody>() ?? ball.AddComponent<Rigidbody>();
+        Rigidbody rb = ball.GetComponent<Rigidbody>();
+        if (!rb) rb = ball.AddComponent<Rigidbody>();
         rb.useGravity = useGravity;
         rb.isKinematic = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
-        var dir = rot * Vector3.forward;
-        var v = dir * -muzzleSpeed;
+        Vector3 v = firePoint.forward * -muzzleSpeed;
+
         if (inheritLauncherVelocity)
         {
             var shooterRb = GetComponentInParent<Rigidbody>();
@@ -70,15 +58,9 @@ public class ShootBall : NetworkBehaviour
         }
 
         rb.linearVelocity = v;
+
         rb.AddForce(Vector3.up * 3f, ForceMode.Impulse);
 
-        if (lifeTime > 0f) StartCoroutine(DespawnAfter(no, ball, lifeTime));
-    }
-
-    private IEnumerator DespawnAfter(NetworkObject no, GameObject go, float t)
-    {
-        yield return new WaitForSeconds(t);
-        if (no && no.IsSpawned) no.Despawn();
-        Destroy(go);
+        if (lifeTime > 0f) Destroy(ball, lifeTime);
     }
 }
