@@ -33,7 +33,7 @@ namespace XRMultiplayer.MiniGames
         /// <summary>
         /// The type of game.
         /// </summary>
-        public enum GameType { Time, Score }
+        public enum GameType { Time, Score, ScoreIsLowest }
 
         /// <summary>
         /// The current game type.

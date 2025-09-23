@@ -17,7 +17,7 @@ public class GolfClub : MonoBehaviour
         {
             if (ball.OwnerClientId == NetworkManager.Singleton.LocalClientId)
             {
-                // Call the local method on MiniGame_Golf
+
                 m_MiniGameGolf.IncrementStrokeCount();
             }
         }

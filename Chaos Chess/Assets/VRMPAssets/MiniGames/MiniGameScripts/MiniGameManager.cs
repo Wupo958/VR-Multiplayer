@@ -502,7 +502,7 @@ namespace XRMultiplayer.MiniGames
             if (currentPlayerDictionary.Count > 0)
             {
                 float score = currentPlayerDictionary.First().Value.currentScore;
-                if (currentMiniGame.currentGameType == MiniGameBase.GameType.Time)
+                if (currentMiniGame.currentGameType == MiniGameBase.GameType.Time || currentMiniGame.currentGameType == MiniGameBase.GameType.ScoreIsLowest)
                 {
                     if (score < m_BestAllScore.Value || m_BestAllScore.Value <= 0.0f)
                     {
@@ -537,10 +537,10 @@ namespace XRMultiplayer.MiniGames
                     if (finishGameOnScoreSubmit)
                     {
                         currentPlayerDictionary[player].isFinished = true;
-                        if (player.IsLocalPlayer)
-                        {
-                            FinishGame();
-                        }
+                        //if (player.IsLocalPlayer)
+                        //{
+                        //    FinishGame();
+                        //}
                     }
                 }
             }
@@ -773,7 +773,7 @@ namespace XRMultiplayer.MiniGames
         }
         void SortPlayers()
         {
-            if (currentMiniGame.currentGameType == MiniGameBase.GameType.Time)
+            if (currentMiniGame.currentGameType == MiniGameBase.GameType.Time ||currentMiniGame.currentGameType == MiniGameBase.GameType.ScoreIsLowest)
             {
                 currentPlayerDictionary = currentPlayerDictionary.OrderBy(x => x.Value.currentScore).ToDictionary(x => x.Key, x => x.Value);
             }
@@ -927,7 +927,7 @@ namespace XRMultiplayer.MiniGames
             }
             else
             {
-                if (currentMiniGame.currentGameType == MiniGameBase.GameType.Time)
+                if (currentMiniGame.currentGameType == MiniGameBase.GameType.Time || currentMiniGame.currentGameType == MiniGameBase.GameType.ScoreIsLowest)
                 {
                     if (score <= m_BestAllScore.Value && m_BestAllScore.Value > 0.0f)
                     {

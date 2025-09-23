@@ -4,48 +4,25 @@ using XRMultiplayer.MiniGames;
 using System.Collections;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using static XRMultiplayer.MiniGames.MiniGameBase;
+using System.Linq;
 namespace XRMultiplayer.MiniGames
 
 {
-
-    /// <summary>
-
-    /// Manages the local state and lifecycle of the Golf minigame.
-
-    /// </summary>
 
     public class MiniGame_Golf : MiniGameBase
 
     {
 
-        /// <summary>
-
-        /// Reference to the networked component that handles synchronized actions.
-
-        /// </summary>
 
         [SerializeField] private NetworkedGolf m_NetworkedGameplay;
 
         [SerializeField] float m_ClubResetTime = .25f;
 
-        /// <summary>
-        /// The interactable objects to use for the mini-game.
-        /// </summary>
         readonly Dictionary<XRBaseInteractable, Pose> m_InteractablePoses = new();
 
 
-        /// <summary>
-
-        /// The player's current stroke count for the hole.
-
-        /// </summary>
-
         private int m_CurrentStrokes = 0;
-
-
-        /// <inheritdoc/>
-
-        /// 
 
         public override void Start()
         {
@@ -71,7 +48,6 @@ namespace XRMultiplayer.MiniGames
             }
         }
 
-
         public override void SetupGame()
         {
 
@@ -81,8 +57,7 @@ namespace XRMultiplayer.MiniGames
 
             Debug.Log("--- 1. MiniGame_Golf.SetupGame() CALLED ---");
 
-
-            // Only the server should initiate course generation.
+            MasterReset();
 
             if (m_NetworkedGameplay.IsOwner)
             {
@@ -95,31 +70,42 @@ namespace XRMultiplayer.MiniGames
 
         }
 
-
-        /// <inheritdoc/>
+        public void MasterReset()
+        {
+            foreach (var interactable in m_GameInteractables)
+            {
+                if (interactable.TryGetComponent<NetworkPhysicsInteractable>(out var networkInteractable))
+                {
+                    networkInteractable.spawnLocked = false;
+                    networkInteractable.ResetObject();
+                }
+            }
+        }
 
         public override void StartGame()
         {
 
             base.StartGame();
+            if (m_NetworkedGameplay.IsOwner)
+            {
+                List<ulong> playerIds = m_MiniGameManager.currentPlayerDictionary.Keys.Select(p => p.OwnerClientId).ToList();
+
+                m_NetworkedGameplay.SpawnPlayerBalls(playerIds, m_NetworkedGameplay.IsOwner);
+            }
 
         }
 
         public override void FinishGame(bool submitScore = true)
         {
+            StopAllCoroutines();
 
             base.FinishGame(submitScore);
 
             Debug.Log($"Finished hole with {m_CurrentStrokes} strokes.");
 
+            MasterReset();
+
         }
-
-
-        /// <summary>
-
-        /// Called by the local player's club when it hits the ball.
-
-        /// </summary>
 
         public void IncrementStrokeCount()
         {
@@ -132,6 +118,8 @@ namespace XRMultiplayer.MiniGames
 
         void ClubDropped(BaseInteractionEventArgs args)
         {
+            if (m_MiniGameManager.currentNetworkedGameState != MiniGameManager.GameState.InGame) return;
+
             XRBaseInteractable interactable = (XRBaseInteractable)args.interactableObject;
             if (m_InteractablePoses.ContainsKey(interactable))
             {
@@ -139,38 +127,31 @@ namespace XRMultiplayer.MiniGames
             }
         }
 
-        /// <summary>
-        /// Coroutine that drops the hammer after a specified time and resets the interactable's position.
-        /// </summary>
-        /// <param name="interactable">The interactable object.</param>
         IEnumerator DropClubAfterTimeRoutine(XRBaseInteractable interactable)
         {
             yield return new WaitForSeconds(m_ClubResetTime);
+
             if (!interactable.isSelected)
             {
-                Rigidbody body = interactable.GetComponent<Rigidbody>();
-                bool wasKinematic = body.isKinematic;
-                body.isKinematic = true;
-                interactable.transform.SetPositionAndRotation(m_InteractablePoses[interactable].position, m_InteractablePoses[interactable].rotation);
-                yield return new WaitForFixedUpdate();
-                body.isKinematic = wasKinematic;
-                foreach (var collider in interactable.colliders)
+
+                if (interactable.TryGetComponent<NetworkPhysicsInteractable>(out var networkInteractable))
                 {
-                    collider.enabled = true;
+
+                    networkInteractable.ResetObject();
+
                 }
             }
         }
 
-
         public void PlayerHoledOut()
         {
             Debug.Log("Player holed out!");
-            m_CurrentStrokes--;
+            if (m_CurrentStrokes > 1)
+                m_CurrentStrokes--;
 
             bool finishGameOnSubmit = true;
 
             m_MiniGameManager.SubmitScoreRpc(m_CurrentStrokes, XRINetworkPlayer.LocalPlayer.OwnerClientId, finishGameOnSubmit);
-
         }
 
     }
