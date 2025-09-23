@@ -1,18 +1,47 @@
 using UnityEngine;
 using Unity.Netcode;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PingPongBallScript : NetworkBehaviour
 {
-    public networkedPingPong networkedPingPong;
+    [Header("Maximale Geschwindigkeit (m/s)")]
+    [SerializeField] private float maxSpeed = 10f;
 
-    private void OnCollisionEnter(Collision collision)
+    private Rigidbody rb;
+    private float maxSpeedSqr;
+
+    private void Awake()
     {
-        if (!IsServer) return; // nur der Server triggert den nächsten Ball
+        rb = GetComponent<Rigidbody>();
+        maxSpeedSqr = maxSpeed * maxSpeed;
+    }
 
-        if (collision.gameObject.CompareTag("Ground"))
+    public override void OnNetworkSpawn()
+    {
+        // Physik am besten server-seitig steuern
+        if (!IsServer && rb != null)
         {
-            networkedPingPong.spawnBall();
-            GetComponent<NetworkObject>().Despawn(true); // statt Destroy()
+            // Sicherheitshalber: Client-Physik nicht simulieren
+            rb.isKinematic = true;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        // Nur der Server sollte die Physik (inkl. Capping) machen
+        if (!IsServer || rb == null) return;
+
+        Vector3 v = rb.linearVelocity;
+        if (v.sqrMagnitude > maxSpeedSqr)
+        {
+            rb.linearVelocity = v.normalized * maxSpeed;
+        }
+    }
+
+    // Falls du den Wert zur Laufzeit ï¿½nderst:
+    private void OnValidate()
+    {
+        if (maxSpeed < 0f) maxSpeed = 0f;
+        maxSpeedSqr = maxSpeed * maxSpeed;
     }
 }

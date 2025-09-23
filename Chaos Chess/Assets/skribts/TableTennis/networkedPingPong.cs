@@ -14,16 +14,4 @@ public class networkedPingPong : NetworkBehaviour
     {
         TryGetComponent(out m_MiniGame);
     }
-
-    // in networkedPingPong
-    public void spawnBall()
-    {
-        Transform spawn = m_MiniGame.player1Turn ? ballSpawnPlayer1.transform : ballSpawnPlayer2.transform;
-
-        GameObject go = NetworkObject.Instantiate(ball, spawn.position, spawn.rotation);
-        var no = go.GetComponent<NetworkObject>();
-        
-
-        m_MiniGame.player1Turn = !m_MiniGame.player1Turn;
-    }
 }
