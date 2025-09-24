@@ -6,3 +6,8 @@
 
 ## Sonstiges
 - Die Unity-Editor Version ist 6000.2.4f1.
+
+## Asset Credits
+- https://kenney-assets.itch.io/minigolf-kit (Mini Golf)
+- https://assetstore.unity.com/packages/3d/props/3d-low-poly-tools-weapons-containers-274127 (Baseball und weitere Schläger Assets)
+- https://assetstore.unity.com/packages/3d/props/low-poly-table-tennis-set-181749 (PingPong Tisch und Schläger)
